@@ -3,69 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>City Punks | Cyberpunk AI Game</title>
+    <title>CITY PUNKS | AI Augmented Future</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        h1, h2, h3, .nav-logo { font-family: 'Orbitron', sans-serif; }
+
+        /* The Glitch Effect from the Video */
+        .glitch {
+            position: relative;
+            text-shadow: 0.05em 0 0 #ff0044, -0.03em -0.04em 0 #00ffcc, 0.025em 0.04em 0 #0044ff;
+            animation: glitch 700ms infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 #ff0044, -0.03em -0.04em 0 #00ffcc, 0.025em 0.04em 0 #0044ff; }
+            15% { text-shadow: 0.05em 0 0 #ff0044, -0.03em -0.04em 0 #00ffcc, 0.025em 0.04em 0 #0044ff; }
+            16% { text-shadow: -0.05em -0.02em 0 #ff0044, 0.025em 0.02em 0 #00ffcc, -0.04em -0.04em 0 #0044ff; }
+            49% { text-shadow: -0.05em -0.02em 0 #ff0044, 0.025em 0.02em 0 #00ffcc, -0.04em -0.04em 0 #0044ff; }
+            50% { text-shadow: 0.02em 0.04em 0 #ff0044, 0.05em 0 0 #00ffcc, 0 -0.04em 0 #0044ff; }
+            100% { text-shadow: -0.02em 0 0 #ff0044, -0.02em -0.02em 0 #00ffcc, -0.02em -0.04em 0 #0044ff; }
+        }
+
+        /* Scanline Overlay */
+        .scanlines {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Custom Hover for News Cards */
+        .news-card {
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        .news-card:hover {
+            transform: translateY(-8px);
+            border-color: #ef4444;
+        }
+    </style>
 </head>
 <body class="bg-black text-white overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 flex justify-between items-center px-10 py-6 bg-gradient-to-b from-black/80 to-transparent">
-        <div class="text-2xl font-bold tracking-tighter text-red-500">CITY PUNKS</div>
-        <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest">
-            <a href="#" class="hover:text-red-500 transition">Game</a>
-            <a href="#" class="hover:text-red-500 transition">Features</a>
-            <a href="#" class="hover:text-red-500 transition">News</a>
+    <nav class="fixed w-full z-[100] flex justify-between items-center px-6 md:px-12 py-6 bg-black/60 backdrop-blur-lg border-b border-white/10">
+        <div class="nav-logo text-xl font-black tracking-tighter text-red-600">CITY PUNKS</div>
+        <div class="hidden md:flex gap-10 text-xs uppercase tracking-[0.2em] font-bold">
+            <a href="#hero" class="hover:text-red-500 transition">Database</a>
+            <a href="#features" class="hover:text-red-500 transition">Augments</a>
+            <a href="#news" class="hover:text-red-500 transition">Factions</a>
         </div>
-        <button class="md:hidden text-3xl">☰</button>
+        <button id="menu-btn" class="md:hidden text-2xl">☰</button>
     </nav>
 
-    <section class="relative h-screen w-full flex items-end pb-20 px-10 overflow-hidden">
-        <video autoplay muted loop class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
-            <source src="hero-video.mp4" type="video/mp4">
-        </video>
+    <div id="mobile-menu" class="fixed inset-0 bg-red-600 z-[110] hidden flex-col items-center justify-center space-y-8 text-4xl font-black uppercase text-black italic">
+        <button id="close-btn" class="absolute top-8 right-8 text-5xl">&times;</button>
+        <a href="#hero" onclick="toggleMenu()">Start</a>
+        <a href="#features" onclick="toggleMenu()">Specs</a>
+        <a href="#news" onclick="toggleMenu()">Update</a>
+    </div>
+
+    <section id="hero" class="relative h-screen flex items-end pb-24 px-6 md:px-12 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=1920" class="w-full h-full object-cover opacity-60 grayscale scale-105">
+        </div>
+        <div class="absolute inset-0 scanlines z-10"></div>
         
-        <div class="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]"></div>
-
-        <div class="relative z-20 max-w-4xl">
-            <h1 class="text-8xl font-black italic uppercase glitch-text mb-6 leading-none">
-                City <br> <span class="text-red-600">Punks</span>
+        <div class="relative z-20 max-w-5xl">
+            <h1 class="text-6xl md:text-9xl font-black uppercase italic leading-none mb-6 glitch">
+                Neon <br> <span class="text-red-600">Underground</span>
             </h1>
-            <p class="text-lg text-gray-300 max-w-md mb-8 border-l-4 border-red-600 pl-4">
-                The neon streets of the future are calling. Survive the augmentation wars in the ultimate AI-driven RPG.
+            <p class="max-w-md text-gray-400 border-l-2 border-red-600 pl-6 mb-10 text-sm md:text-base uppercase tracking-widest leading-relaxed">
+                The corporate wars are over. The street wars have just begun. Master the AI. Rule the city.
             </p>
-            <button class="bg-red-600 hover:bg-white hover:text-black text-white font-bold py-4 px-10 uppercase tracking-widest transition-all duration-300">
-                Play the Game
-            </button>
-        </div>
-    </section>
-
-    <section class="py-32 px-10 bg-zinc-950">
-        <div class="grid md:grid-cols-2 gap-10">
-            <div class="group relative overflow-hidden h-[500px]">
-                <img src="feature1.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
-                <div class="absolute bottom-0 p-8 bg-gradient-to-t from-black to-transparent w-full">
-                    <h3 class="text-3xl font-bold italic uppercase">Cyber Augmentation</h3>
-                </div>
-            </div>
-            <div class="group relative overflow-hidden h-[500px]">
-                <img src="feature2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
-                <div class="absolute bottom-0 p-8 bg-gradient-to-t from-black to-transparent w-full">
-                    <h3 class="text-3xl font-bold italic uppercase">Neon Districts</h3>
-                </div>
+            <div class="flex flex-col md:flex-row gap-4">
+                <button class="bg-red-600 text-black font-black py-4 px-12 uppercase tracking-tighter hover:bg-white transition-all transform active:scale-95">
+                    Enter the Grid
+                </button>
+                <button class="border border-white/20 py-4 px-12 uppercase text-xs tracking-widest hover:bg-white/10 transition-all">
+                    Watch Trailer
+                </button>
             </div>
         </div>
     </section>
 
-    <section class="py-20 px-10">
-        <h2 class="text-4xl font-bold italic uppercase mb-12">Latest News</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="bg-zinc-900 p-6 border-b-2 border-transparent hover:border-red-600 transition">
-                <span class="text-red-600 text-xs font-bold uppercase tracking-widest">Update 2.0</span>
-                <h4 class="text-xl font-bold mt-2">New District: The Slums</h4>
-                <p class="text-gray-400 mt-4">Explore the dark underbelly of the city...</p>
+    <section id="features" class="py-32 px-6 md:px-12 bg-zinc-950 relative">
+        <h2 class="text-3xl font-black italic uppercase mb-16 tracking-widest text-center md:text-left">Project Specs</h2>
+        <div class="grid md:grid-cols-2 gap-12">
+            <div class="relative group h-[600px] overflow-hidden border border-white/5">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800" class="parallax-img absolute inset-0 w-full h-[120%] object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute bottom-10 left-10">
+                    <span class="text-red-600 text-xs font-bold tracking-[0.3em] uppercase block mb-2">Hardware</span>
+                    <h3 class="text-4xl font-black italic uppercase">Neural Links</h3>
+                </div>
             </div>
+            <div class="relative group h-[600px] overflow-hidden border border-white/5">
+                <img src="https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=800" class="parallax-img absolute inset-0 w-full h-[120%] object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute bottom-10 left-10">
+                    <span class="text-red-600 text-xs font-bold tracking-[0.3em] uppercase block mb-2">Environment</span>
+                    <h3 class="text-4xl font-black italic uppercase">Shadow Districts</h3>
+                </div>
             </div>
+        </div>
     </section>
 
+    <section id="news" class="py-32 px-6 md:px-12">
+        <div class="flex justify-between items-end mb-16">
+            <h2 class="text-3xl font-black italic uppercase tracking-widest">Network News</h2>
+            <a href="#" class="text-xs font-bold uppercase tracking-widest text-red-600 hover:text-white">View All Entries →</a>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="news-card p-10 border border-white/10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-4xl font-black">01</div>
+                <h4 class="text-xl font-bold uppercase mb-4 italic">Update Patch 0.4.2</h4>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">Added new bio-luminescent skin options and improved recoil physics for the plasma rifles.</p>
+                <div class="h-[1px] w-12 bg-red-600"></div>
+            </div>
+            <div class="news-card p-10 border border-white/10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-4xl font-black">02</div>
+                <h4 class="text-xl font-bold uppercase mb-4 italic">Faction Wars</h4>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">The High-Tech Syndicate has gained 15% more territory this week in the lower slums.</p>
+                <div class="h-[1px] w-12 bg-red-600"></div>
+            </div>
+            <div class="news-card p-10 border border-white/10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-4xl font-black">03</div>
+                <h4 class="text-xl font-bold uppercase mb-4 italic">Community Log</h4>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">Join our Discord for the exclusive "Ghost" cloak skin drop starting tomorrow.</p>
+                <div class="h-[1px] w-12 bg-red-600"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-40 bg-red-600 text-black text-center px-6">
+        <h2 class="text-5xl md:text-8xl font-black uppercase italic mb-8">Wake Up, Punk.</h2>
+        <button class="bg-black text-white px-16 py-6 font-black uppercase text-xl hover:bg-white hover:text-black transition-all">
+            Join the Resistance
+        </button>
+    </section>
+
+    <footer class="py-12 border-t border-white/10 text-center text-[10px] uppercase tracking-[0.5em] text-gray-600">
+        © 2026 City Punks AI. All Augments Reserved.
+    </footer>
+
+    <script>
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+
+        // Simple Parallax Logic
+        window.addEventListener('scroll', () => {
+            const images = document.querySelectorAll('.parallax-img');
+            images.forEach(img => {
+                let speed = 0.2;
+                let windowY = window.pageYOffset;
+                let imgY = img.parentElement.offsetTop;
+                let val = (windowY - imgY) * speed;
+                img.style.transform = `translateY(${val}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
